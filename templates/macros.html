@@ -1,0 +1,37 @@
+{% macro abbr( term, abbr ) -%}
+	<span class="abbr" data-abbr="{{ abbr | safe }}" title="{{ term | safe }}"><span class="hidden">{{ term | safe }}</span></span>
+{%- endmacro abbr %}
+
+{% macro create_menu( _section, _tab="" ) -%}
+	{%- if _section.pages or _section.subsections %}
+	{{_tab}}<ol>
+		{%- for page in _section.pages %}
+		{{_tab}}<li>
+			{{_tab}}<a href="{{ page.permalink | safe }}"{% if current_path == page.path %} class="active"{% endif %}>{{ page.title | safe }}</a>
+		{{_tab}}</li>
+		{%- endfor %}
+		{%- for subsection_path in _section.subsections %}
+		{%- set s = get_section( path = subsection_path ) %}
+		{{_tab}}<li>
+			{{_tab}}<a href="{{ s.permalink | safe }}"{% if current_path == s.path %} class="active"{% endif %}>{{ s.title | safe }}</a>
+			{{- self::create_menu( _section = s, _i = _i ~ "		") }}
+		{{_tab}}</li>
+		{%- endfor %}
+	{{_tab}}</ol>
+	{%- endif %}
+{%- endmacro create_menu %}
+
+{% macro create_toc( _toc, _tab="" ) -%}
+	{{_tab}}<ol>
+		{%- for header in _toc %}
+		{{_tab}}<li>
+			{{_tab}}<a href="#{{ header.id | safe }}">{{ header.title | safe }}</a>
+			{%- if header.children %}
+				{{- self::create_toc( _toc = header.children, _i = _i ~ "		" ) }}
+			{%- endif %}
+		{{_tab}}</li>
+		{%- endfor %}
+	{{_tab}}</ol>
+{%- endmacro create_toc %}
+
+{#- EOF -#}

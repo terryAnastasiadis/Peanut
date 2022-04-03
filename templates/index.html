@@ -1,0 +1,68 @@
+{%- import "macros.html" as _ -%}
+
+<!DOCTYPE html>
+<html lang="{{ config.default_language }}">
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}{{ config.title | safe }}{% endblock title %}</title>
+	<meta name="description"
+		content="{% block desc %}{{ config.description }}{% endblock desc %}">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0">
+	<!-- CSS -->
+	{%- block css  %}
+	<!--
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="{{ get_url(path='css/main.css') | safe }}">
+	<link rel="stylesheet" href="{{ get_url(path='css/print.css') | safe }}" media="print">
+	-->
+	{%- endblock css  %}
+	<!-- -->
+</head>
+
+<body>
+
+<header>
+	<h1>
+		<a href="{{ get_url(path='/') }}">{{ config.title }}</a>
+	</h1>
+	<a href="#menu">{{ _::abbr( term="Table of Contents", abbr="T.O.C.") }}</a>
+</header>
+
+<nav id="menu">
+	<h2 class='hidden'>
+		{{ _::abbr( term="Table of Contents", abbr = "T.O.C." ) }}
+	</h2>
+	{{- _::create_menu( _section = get_section( path = "_index.md" ) ) }}
+</nav>
+
+<main>
+<!-- intro -->
+{%- block meta %}
+{%- endblock meta %}
+<!-- END intro -->
+
+<!-- toc -->
+{%- block toc %}
+{%- endblock toc %}
+<!-- END toc -->
+
+<!-- content -->
+{%- block content %}
+	{{ section.content | trim_end | safe }}
+{%- endblock content %}
+<!-- END content -->
+</main>
+
+<footer>
+</footer>
+
+<!-- scripts -->
+{%- block scripts -%}
+	<!--
+	<script src="{{ get_url(path='scripts/peanut.js') | safe }}"></script>
+	-->
+{%- endblock scripts %}
+<!-- END scripts -->
+
+</body>
+</html>
