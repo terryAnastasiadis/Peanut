@@ -2,7 +2,7 @@
 base_url = "https://terryanastasiadis.github.io/peanut"
 
 # The site title and description; used in feeds by default.
-title = "<b>peanut</b>"
+title = "peanut"
 description = "Peanut is an intergalactic traveler who always strives to do good."
 
 # The default language; used in feeds.
